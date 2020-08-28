@@ -21,6 +21,6 @@ public:
 	void render(float p_x, float p_y, const char* p_text, TTF_Font* font, SDL_Color textColor);
 	void display();
 	void cleanUp();
-	Grid createGrid(int x, int y);
+	Grid createGrid(int x, int y, float ydivx = 1);
 	void renderGrid(int x, int y, SDL_Texture* p_tex, Grid* grd);
 };

@@ -113,15 +113,15 @@ void RenderWindow::cleanUp()
 	SDL_DestroyWindow(window);
 }
 
-Grid RenderWindow::createGrid(int x, int y){
+Grid RenderWindow::createGrid(int x, int y, float ydivx){
 	int windowWidth;
 	int windowHeight;
 	SDL_GetWindowSize(window, &windowWidth, &windowHeight);
 	int sizeX = windowWidth*8/10/x;
-	int sizeY = windowHeight*8/10/y;
+	int sizeY = windowHeight*8/10/(y*ydivx);
 	int size = std::min(sizeX, sizeY);
 	Grid level;
-	level.init(size, size, x, y, (windowWidth - size*x)/2, (windowHeight - size*y)/2);
+	level.init(size, (int)(size*ydivx), x, y, (windowWidth - size*x)/2, (windowHeight - (int)(size*ydivx)*y)/2);
 	return level;
 }
 
