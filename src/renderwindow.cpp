@@ -134,5 +134,5 @@ void RenderWindow::renderGrid(int x, int y, SDL_Texture* p_tex, Grid* grd){
 	SDL_QueryTexture(p_tex, NULL, NULL, &src.w, &src.h); 
 	SDL_RenderCopy(renderer, p_tex, &src, &dst);
 	//SDL_SetRenderDrawColor(renderer, 200, 100, 100, 255);
-	//SDL_RenderFillRect(renderer, &dst);
+	//SDL_RenderFillRect(renderer, &dst); 
 }
