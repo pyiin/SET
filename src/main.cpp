@@ -25,13 +25,25 @@ void init(){
 	IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
 	window.create("Test", SCREEN_WIDTH, SCREEN_HEIGHT);
-	font32 = TTF_OpenFont("res/cocogoose.ttf", 32);
+	font32 = TTF_OpenFont("res/font.ttf", 128);
 	test = window.loadTexture("res/one.png");
 
 	//Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	levelGrid = window.createGrid(4,3);
 
 	srand((unsigned)time(0));
+}
+
+void cellClicked(std::pair<int,int> position){
+	if(position != OUT){ 
+		auto pos = std::find (cards.begin(), cards.end(), position);
+		if(pos == cards.end()){
+			cards.push_back(position);
+		}
+		else{
+			cards.erase(pos);
+		}
+	}
 }
 
 void gameLoop(){
@@ -45,9 +57,7 @@ void gameLoop(){
 			}
 			case SDL_MOUSEBUTTONDOWN:{
 				if(event.button.button != SDL_BUTTON_LEFT) continue;
-				auto position = levelGrid.getCell(event.button.x, event.button.y);
-				if(position != OUT) 
-					cards.push_back(position);
+				cellClicked(levelGrid.getCell(event.button.x, event.button.y));
     	  		break;
 			}
 			case SDL_WINDOWEVENT:{
@@ -59,23 +69,24 @@ void gameLoop(){
 	}
 }
 
+void drawLoop(){
+	window.clear();
+	SDL_SetRenderDrawColor(window.renderer, 120, 120, 120, 255);
+	//window.render(0, 0, " SET", font32, SDL_Color{20,20,20});
+	SDL_RenderFillRect(window.renderer, &rect);
+	for(auto i: cards){
+		window.renderGrid(i.first, i.second, test, &levelGrid);
+	}
+	window.display();
+}
 
 int main(int argc, char* args[]){
 	init();
 	rect = levelGrid.getSize();
 	gameRunning = 1;
 	while(gameRunning){
-		window.clear();
-		//window.render(test);
     	gameLoop();
-		//SDL_Rect a= {1390,970,86,86};
-		SDL_SetRenderDrawColor(window.renderer, 120, 120, 120, 255);
-		//SDL_RenderFillRect(window.renderer, &a);
-		SDL_RenderFillRect(window.renderer, &rect);
-		for(auto i: cards){
-			window.renderGrid(i.first, i.second, test, &levelGrid);
-		}
-		window.display();
+		drawLoop();
     	SDL_Delay(int(1000/FPS)); //delay
 	}
 

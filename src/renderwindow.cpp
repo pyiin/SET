@@ -117,11 +117,11 @@ Grid RenderWindow::createGrid(int x, int y){
 	int windowWidth;
 	int windowHeight;
 	SDL_GetWindowSize(window, &windowWidth, &windowHeight);
-	int maxXsize = windowWidth*8/10/x;
-	int maxYsize = windowHeight*8/10/y;
-	int size = std::min(maxXsize, maxYsize);
+	int sizeX = windowWidth*8/10/x;
+	int sizeY = windowHeight*8/10/y;
+	int size = std::min(sizeX, sizeY);
 	Grid level;
-	level.init(size, x, y, (windowWidth - size*x)/2, (windowHeight - size*y)/2);
+	level.init(size, size, x, y, (windowWidth - size*x)/2, (windowHeight - size*y)/2);
 	return level;
 }
 
