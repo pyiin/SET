@@ -10,6 +10,7 @@
 #define FPS 60
 #define OUT std::pair<int,int>{-1,-1}
 
+int cooldown;
 RenderWindow window;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 480;
@@ -45,8 +46,11 @@ void eventLoop(){
     	  		break;
 			}
 			case SDL_MOUSEBUTTONDOWN:{
+				if(cooldown > 0){
+					continue;
+				}
 				if(event.button.button == SDL_BUTTON_LEFT)
-					SETboard.cardClicked(event.button.x, event.button.y);
+					cooldown = SETboard.cardClicked(event.button.x, event.button.y);
 				if(event.button.button == SDL_BUTTON_RIGHT)
 					SETboard.resizeGrid(-1);
     	  		break;
@@ -64,6 +68,10 @@ int main(int argc, char* args[]){
 	init();
 	gameRunning = 1;
 	while(gameRunning){
+		cooldown = cooldown ? cooldown - 1 : 0;
+		if(cooldown == 1){
+			SETboard.cooldownDown();
+		}
     	eventLoop();
 		SETboard.drawGrid();
     	SDL_Delay(int(1000/FPS)); //delay

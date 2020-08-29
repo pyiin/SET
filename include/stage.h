@@ -12,18 +12,23 @@ private:
 	float ydivx;
 	SpriteSheet SET;
 	SDL_Texture* chosen;
+	SDL_Texture* right;
+	SDL_Texture* wrong;
 	int cardWidth = 46;
 	Grid levelGrid;
 	SDL_Rect rect;
 	RenderWindow* window;
 	std::vector<int> cards;
 	std::vector<std::pair<int,int>> selected;
+	std::vector<std::pair<int,int>> goodCards;
+	std::vector<std::pair<int,int>> badCards;
 
 public:
 	void init(RenderWindow *window);
 	void redoGrid();
 	void drawGrid();
-	void cardClicked(int x, int y);
+	int cardClicked(int x, int y);
 	bool checkIfOK();
 	void resizeGrid(int dx);
+	void cooldownDown();
 };

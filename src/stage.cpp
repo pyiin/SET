@@ -13,8 +13,30 @@ void Stage::resizeGrid(int dx){
 	}
 }
 
+void Stage::cooldownDown(){
+	while(!goodCards.empty()){
+		int k = goodCards[0].second+ goodCards[0].first * yGridSize;
+		if(int(cards.size())>numCards && numCards == 12){
+			cards[k] = cards[numCards];
+			cards.erase(std::begin(cards) + numCards);
+			goodCards.erase(std::begin(goodCards));
+		}
+		else{
+			cards.erase(std::begin(cards) + goodCards[0].second+ goodCards[0].first * yGridSize);
+			goodCards.erase(std::begin(goodCards));
+		}	
+	}
+	if(numCards > 12){
+		numCards -=3;
+		xGridSize = (numCards+2)/yGridSize;
+		redoGrid();
+	}
+	goodCards.clear();
+	badCards.clear();
+}
 
-void Stage::cardClicked(int x, int y){
+
+int Stage::cardClicked(int x, int y){
 	auto position = levelGrid.getCell(x,y);
 	if(position != OUT){ //to change
 		auto pos = std::find (selected.begin(), selected.end(), position);
@@ -27,31 +49,20 @@ void Stage::cardClicked(int x, int y){
 		}
 		if(selected.size() == 3){
 			if(checkIfOK()){
-				while(!selected.empty()){
-					int k = selected[0].second+ selected[0].first * yGridSize;
-					if(int(cards.size())>numCards && numCards == 12){
-						cards[k] = cards[numCards];
-						cards.erase(std::begin(cards) + numCards);
-						selected.erase(std::begin(selected));
-					}
-					else{
-						cards.erase(std::begin(cards) + selected[0].second+ selected[0].first * yGridSize);
-						selected.erase(std::begin(selected));
-					}	
-				}
-				if(numCards > 12){
-					numCards -=3;
-					xGridSize = (numCards+2)/yGridSize;
-					redoGrid();
-				}
-			}
-			else
+				goodCards = selected;
 				selected.clear();
+				return 30;
+			}
+			else{
+				badCards = selected;
+				selected.clear();
+				return 30;
+			}
 		}
 	}
 	else
 		resizeGrid(1);
-
+	return 0;
 }
 
 
@@ -59,8 +70,8 @@ void Stage::init(RenderWindow* p_window){
 	window = p_window;
 	numCards = xGridSize * yGridSize;
 	chosen = window->loadTexture("res/chosen.png");
-	//right = window->loadTexture("res/right.png");
-	//wrong = window->loadTexture("res/wrong.png");
+	right = window->loadTexture("res/right.png");
+	wrong = window->loadTexture("res/wrong.png");
 	SET.init(window->loadTexture("res/spriteStrip.png"),81,1);
 	ydivx = 47.0/36.0;
 	for(int i=0;i<81;i++)
@@ -80,6 +91,12 @@ void Stage::drawGrid(){
 	}
 	for(auto i: selected){
 		window->renderGrid(i.first, i.second,chosen, &levelGrid, SDL_Rect{0,0,36,47});
+	}
+	for(auto i: goodCards){
+		window->renderGrid(i.first, i.second,right, &levelGrid, SDL_Rect{0,0,36,47});
+	}
+	for(auto i: badCards){
+		window->renderGrid(i.first, i.second,wrong, &levelGrid, SDL_Rect{0,0,36,47});
 	}
 	window->display();
 }
