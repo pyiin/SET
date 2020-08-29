@@ -22,5 +22,5 @@ public:
 	void display();
 	void cleanUp();
 	Grid createGrid(int x, int y, float ydivx = 1);
-	void renderGrid(int x, int y, SDL_Texture* p_tex, Grid* grd);
+	void renderGrid(int x, int y, SDL_Texture* p_tex, Grid* grd, SDL_Rect src);
 };

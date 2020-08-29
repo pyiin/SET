@@ -126,12 +126,8 @@ Grid RenderWindow::createGrid(int x, int y, float ydivx){
 }
 
 
-void RenderWindow::renderGrid(int x, int y, SDL_Texture* p_tex, Grid* grd){
-	auto dst = (*grd).getDest(x,y);
-	SDL_Rect src;
-	src.x = 0;
-	src.y = 0;
-	SDL_QueryTexture(p_tex, NULL, NULL, &src.w, &src.h); 
+void RenderWindow::renderGrid(int x, int y, SDL_Texture* p_tex, Grid* grd, SDL_Rect src){
+	auto dst = grd->getDest(x,y);
 	SDL_RenderCopy(renderer, p_tex, &src, &dst);
 	//SDL_SetRenderDrawColor(renderer, 200, 100, 100, 255);
 	//SDL_RenderFillRect(renderer, &dst);  

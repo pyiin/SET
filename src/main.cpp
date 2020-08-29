@@ -47,7 +47,7 @@ void eventLoop(){
 			}
 			case SDL_MOUSEBUTTONDOWN:{
 				if(event.button.button != SDL_BUTTON_LEFT) continue;
-				SETboard.cardClicked(event.button.x, event.button.y);
+				SETboard.cardClicked(event.button.x, event.button.y, &window);
     	  		break;
 			}
 			case SDL_WINDOWEVENT:{
