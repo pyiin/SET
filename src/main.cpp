@@ -26,7 +26,7 @@ void init(){
 	TTF_Init();
 	window.create("Test", SCREEN_WIDTH, SCREEN_HEIGHT);
 	SETboard.init(&window);
-	SETboard.redoGrid(&window);
+	SETboard.redoGrid();
 	font32 = TTF_OpenFont("res/font.ttf", 128);
 	test = window.loadTexture("res/one.png");
 	//SDL_SetTextureColorMod(test, 255, 10, 10);
@@ -46,12 +46,14 @@ void eventLoop(){
     	  		break;
 			}
 			case SDL_MOUSEBUTTONDOWN:{
-				if(event.button.button != SDL_BUTTON_LEFT) continue;
-				SETboard.cardClicked(event.button.x, event.button.y, &window);
+				if(event.button.button == SDL_BUTTON_LEFT)
+					SETboard.cardClicked(event.button.x, event.button.y);
+				if(event.button.button == SDL_BUTTON_RIGHT)
+					SETboard.resizeGrid(-1);
     	  		break;
 			}
 			case SDL_WINDOWEVENT:{
-				SETboard.redoGrid(&window);
+				SETboard.redoGrid();
 				//levelGrid = window.createGrid(4,3);
     	  		break;
 			}	
@@ -64,7 +66,7 @@ int main(int argc, char* args[]){
 	gameRunning = 1;
 	while(gameRunning){
     	eventLoop();
-		SETboard.drawGrid(&window);
+		SETboard.drawGrid();
     	SDL_Delay(int(1000/FPS)); //delay
 	}
 
