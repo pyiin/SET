@@ -5,17 +5,21 @@
 #define OUT std::pair<int,int>{-1,-1}
 
 void Stage::resizeGrid(int dx){
-	numCards +=dx*yGridSize;
-	xGridSize += dx;
-	redoGrid();
+	if(xGridSize + dx > 0 && (xGridSize+dx)*yGridSize<=24){
+		numCards +=dx*yGridSize;
+		xGridSize += dx;
+		selected.clear();
+		redoGrid();
+	}
 }
+
 
 void Stage::cardClicked(int x, int y){
 	auto position = levelGrid.getCell(x,y);
 	if(position != OUT){ //to change
 		auto pos = std::find (selected.begin(), selected.end(), position);
 		if(pos == selected.end()){
-			if(position.first*yGridSize + position.second < numCards)
+			if(position.first*yGridSize + position.second < std::min(numCards, int(cards.size())))
 				selected.push_back(position);
 		}
 		else{
@@ -49,10 +53,14 @@ void Stage::cardClicked(int x, int y){
 		resizeGrid(1);
 
 }
+
+
 void Stage::init(RenderWindow* p_window){
 	window = p_window;
 	numCards = xGridSize * yGridSize;
 	chosen = window->loadTexture("res/chosen.png");
+	//right = window->loadTexture("res/right.png");
+	//wrong = window->loadTexture("res/wrong.png");
 	SET.init(window->loadTexture("res/spriteStrip.png"),81,1);
 	ydivx = 47.0/36.0;
 	for(int i=0;i<81;i++)
@@ -60,6 +68,8 @@ void Stage::init(RenderWindow* p_window){
 	std::shuffle(cards.begin(), cards.end(), std::random_device());
 	
 }
+
+
 void Stage::drawGrid(){
 	window->clear();
 	SDL_SetRenderDrawColor(window->renderer, 120, 120, 120, 255);
@@ -74,10 +84,12 @@ void Stage::drawGrid(){
 	window->display();
 }
 
+
 void Stage::redoGrid(){
 	levelGrid = window->createGrid(xGridSize, yGridSize, ydivx);
 	rect = levelGrid.getSize();
 }
+
 
 bool Stage::checkIfOK(){
 	int a = 0;

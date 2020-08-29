@@ -9,7 +9,7 @@ private:
 	int xGridSize = 4;
 	int yGridSize = 3;
 	int numCards;
-	float ydivx = 46/35;
+	float ydivx;
 	SpriteSheet SET;
 	SDL_Texture* chosen;
 	int cardWidth = 46;
