@@ -13,6 +13,7 @@ private:
 	SpriteSheet SET;
 	SDL_Texture* chosen;
 	SDL_Texture* right;
+	SDL_Texture* nothing;
 	SDL_Texture* wrong;
 	int cardWidth = 46;
 	Grid levelGrid;

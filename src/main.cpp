@@ -15,8 +15,8 @@ RenderWindow window;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 480;
 bool gameRunning;
-TTF_Font* font32;
-SDL_Texture* test;
+TTF_Font* font;
+std::vector<SDL_Texture*> title;
 Stage SETboard;
 std::vector<std::pair<int,int>> cards;
 
@@ -24,14 +24,18 @@ void init(){
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
-	window.create("Test", SCREEN_WIDTH, SCREEN_HEIGHT);
+	window.create("SET", SCREEN_WIDTH, SCREEN_HEIGHT);
 	SETboard.init(&window);
 	SETboard.redoGrid();
-	font32 = TTF_OpenFont("res/font.ttf", 128);
-	test = window.loadTexture("res/one.png");
+	font = TTF_OpenFont("res/font.ttf", 128);
+	title.push_back(window.loadTexture("res/title.png"));
+	title.push_back(window.loadTexture("res/title2.png"));
+	title.push_back(window.loadTexture("res/title3.png"));
+	title.push_back(window.loadTexture("res/title4.png"));
+	std::shuffle(title.begin(), title.end(), std::random_device());
 	//SDL_SetTextureColorMod(test, 255, 10, 10);
 	//Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-
+	cooldown = 20;
 	srand((unsigned)time(0));
 }
 
@@ -67,6 +71,13 @@ void eventLoop(){
 int main(int argc, char* args[]){
 	init();
 	gameRunning = 1;
+	while(cooldown>0){
+		window.clear();
+		window.render(title[0]);
+		cooldown--;
+    	SDL_Delay(int(1000/FPS)); //delay
+		window.display();
+	}
 	while(gameRunning){
 		cooldown = cooldown ? cooldown - 1 : 0;
 		if(cooldown == 1){

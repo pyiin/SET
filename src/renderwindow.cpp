@@ -39,27 +39,7 @@ void RenderWindow::clear(int r, int g, int b, int a)
 	SDL_RenderClear(renderer);
 }
 
-//void RenderWindow::render(Entity& p_entity)
-//{
-//
-//	for (int i = p_entity.getSize() - 1; i >= 0; i--)
-//	{
-//		SDL_Rect src;
-//		src.x = p_entity.getCurrentFrame().x;
-//		src.y = p_entity.getCurrentFrame().y;
-//		src.w = p_entity.getCurrentFrame().w;
-//		src.h = p_entity.getCurrentFrame().h;
-//
-//		SDL_Rect dst;
-//		dst.x = p_entity.getX() + p_entity.getAnimOffsetX(i);
-//		dst.y = p_entity.getY() + p_entity.getAnimOffsetY(i);
-//		dst.w = p_entity.getCurrentFrame().w;
-//		dst.h = p_entity.getCurrentFrame().h;
-//
-//		SDL_RenderCopy(renderer, p_entity.getTex(i), &src, &dst);
-//	}
-//}
-//
+
 void RenderWindow::render(float p_x, float p_y, SDL_Texture* p_tex)
 {
 	SDL_Rect src;
@@ -78,7 +58,18 @@ void RenderWindow::render(float p_x, float p_y, SDL_Texture* p_tex)
 
 void RenderWindow::render(SDL_Texture* p_tex)
 {
-	render(0, 0, p_tex);
+	int windowWidth;
+	int windowHeight;
+	SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+	int w;
+	int h;
+	SDL_QueryTexture(p_tex, NULL, NULL, &w, &h);
+	int sizeX = windowWidth*1/2/w;
+	int sizeY = windowHeight*1/2/h;
+	int size = std::min(sizeX, sizeY);
+	SDL_Rect dst = {windowWidth/2-size*w/2, windowHeight/2-size*h/2, size*w, size*h};
+	SDL_Rect src = {0, 0, w, h};
+	SDL_RenderCopy(renderer, p_tex, &src, &dst);
 }
 
 void RenderWindow::render(float p_x, float p_y, const char* p_text, TTF_Font* font, SDL_Color textColor)

@@ -26,7 +26,7 @@ void Stage::cooldownDown(){
 			goodCards.erase(std::begin(goodCards));
 		}	
 	}
-	if(numCards > 12){
+	if(numCards > 12 && int(badCards.size())==0){
 		numCards -=3;
 		xGridSize = (numCards+2)/yGridSize;
 		redoGrid();
@@ -51,12 +51,12 @@ int Stage::cardClicked(int x, int y){
 			if(checkIfOK()){
 				goodCards = selected;
 				selected.clear();
-				return 30;
+				return 20;
 			}
 			else{
 				badCards = selected;
 				selected.clear();
-				return 30;
+				return 20;
 			}
 		}
 	}
@@ -72,6 +72,7 @@ void Stage::init(RenderWindow* p_window){
 	chosen = window->loadTexture("res/chosen.png");
 	right = window->loadTexture("res/right.png");
 	wrong = window->loadTexture("res/wrong.png");
+	nothing = window->loadTexture("res/nothing.png");
 	SET.init(window->loadTexture("res/spriteStrip.png"),81,1);
 	ydivx = 47.0/36.0;
 	for(int i=0;i<81;i++)
@@ -86,6 +87,9 @@ void Stage::drawGrid(){
 	SDL_SetRenderDrawColor(window->renderer, 120, 120, 120, 255);
 	//window.render(0, 0, " SET", font32, SDL_Color{20,20,20});
 	SDL_RenderFillRect(window->renderer, &rect);
+	for(int i = 0; i<xGridSize*yGridSize;i++){
+		window->renderGrid(i/yGridSize, i%yGridSize,nothing, &levelGrid, SDL_Rect{0,0,36,47});
+	}
 	for(int i = 0; i<std::min(int(cards.size()),numCards);i++){
 		window->renderGrid(i/yGridSize, i%yGridSize,SET.tex, &levelGrid, SET.access(cards[i] ,0));
 	}
