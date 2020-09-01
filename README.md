@@ -16,8 +16,22 @@ The goal of the game is to find a set of three card following conditions:
 * For each feature (of the four possible):
 	- all three cards have to display it as the same (for example three red cards)
 	- no two cards can display the same feature - all three different types (for example red, green and purple cards)
-
-![Example of a set](goodSet.png "Example of a SET") ![Example of not a set](badSet.png "Example of not a SET")
+<table>
+<tr>
+<td>
+<figure>
+<img src="goodSet.png" alt="Example of a SET" style="width:90%"/>
+  <figcaption>Example of a SET</figcaption>
+</figure>
+</td>
+<td>
+<figure>
+<img src="badSet.png" alt="Example of not a SET" style="width:90%"/>
+  <figcaption>Example of not a SET</figcaption>
+</figure>
+</td>
+</tr>
+</table>
 
 Sometimes there can be no SETs on the table. When that happens you have to add 3 more cards, up to 21 card, because in 21 cards there has to be a set you can learn more about this fact on [OEIS](https://oeis.org/A090245).
 
