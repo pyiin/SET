@@ -5,7 +5,7 @@
 #define OUT std::pair<int,int>{-1,-1}
 
 void Stage::resizeGrid(int dx){
-	if(xGridSize + dx > 0 && (xGridSize+dx)*yGridSize<=24){
+	if(xGridSize + dx > 0 && (xGridSize+dx)*yGridSize<=21){
 		numCards +=dx*yGridSize;
 		xGridSize += dx;
 		selected.clear();

@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 #include <bits/stdc++.h>
 
 #include "renderwindow.h"
@@ -15,7 +14,6 @@ RenderWindow window;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 480;
 bool gameRunning;
-TTF_Font* font;
 std::vector<SDL_Texture*> title;
 Stage SETboard;
 std::vector<std::pair<int,int>> cards;
@@ -27,7 +25,6 @@ void init(){
 	window.create("SET", SCREEN_WIDTH, SCREEN_HEIGHT);
 	SETboard.init(&window);
 	SETboard.redoGrid();
-	font = TTF_OpenFont("res/font.ttf", 128);
 	title.push_back(window.loadTexture("res/title.png"));
 	title.push_back(window.loadTexture("res/title2.png"));
 	title.push_back(window.loadTexture("res/title3.png"));
@@ -35,7 +32,7 @@ void init(){
 	std::shuffle(title.begin(), title.end(), std::random_device());
 	//SDL_SetTextureColorMod(test, 255, 10, 10);
 	//Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-	cooldown = 20;
+	cooldown = 60;
 	srand((unsigned)time(0));
 }
 

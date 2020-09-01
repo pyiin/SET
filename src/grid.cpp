@@ -20,15 +20,6 @@ void Grid::init(int p_sizeX, int p_sizeY, int p_x, int p_y, int p_Xoffset, int p
 	//std::cout<<"x:"<<x<<" y:"<<y<<" size:"<<size<<" offset:"<<xOffset<<" "<<yOffset;
 }
 
-//void Grid::cellPrint(int p_x, int p_y, SDL_Texture* tex){
-//	
-//}
-//void Grid::changeSize(int newSize, int p_Xoffset, int p_Yoffset){
-//	size = newSize;
-//	xOffset = p_Xoffset;
-//	yOffset = p_Yoffset;
-//}
-
 SDL_Rect Grid::getDest(int p_x, int p_y){
 	SDL_Rect dst;
 	dst.x = xOffset + p_x*sizeX;
