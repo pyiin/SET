@@ -1,6 +1,6 @@
 # SET game
 
-SET game is a computer implementation of SET card game([Site](www.setgame.com)). It was created using C++ and [SDL2](https://www.libsdl.org/).
+SET game is a computer implementation of SET card game ([site](www.setgame.com)). It was created using C++ and [SDL2](https://www.libsdl.org/).
 
 Compiled version for Linux is avilable in release v1.0. For other platform you have to compile it yourself.
 
@@ -17,10 +17,9 @@ The goal of the game is to find a set of three card following conditions:
 	- all three cards have to display it as the same (for example three red cards)
 	- no two cards can display the same feature - all three different types (for example red, green and purple cards)
 
-![Example of a set](goodSet.png)
-![Example of not a set](badSet.png)
+![Example of a set](goodSet.png "Example of a SET") ![Example of not a set](badSet.png "Example of not a SET")
 
-Sometimes there can be no SETs on the table. When that happens you have to add 3 more cards, up to 21 card, because in 21 cards there has to be a set [OEIS](https://oeis.org/A090245).
+Sometimes there can be no SETs on the table. When that happens you have to add 3 more cards, up to 21 card, because in 21 cards there has to be a set you can learn more about this fact on [OEIS](https://oeis.org/A090245).
 
 ## Gameplay
 
