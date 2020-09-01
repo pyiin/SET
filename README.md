@@ -37,6 +37,8 @@ Sometimes there can be no SETs on the table. When that happens you have to add 3
 
 ## Gameplay
 
+![](set-final.gif)
+
 You can select cards by left-clicking. When three cards are selected the game will checks if it is a valid SET, and it will highlight it on green or red for half a second, if the set is right or wrong, accordingly.
 
 You can add three cards by left-clicking outside the playing area (not on any card), and remove three card by right clicking.
